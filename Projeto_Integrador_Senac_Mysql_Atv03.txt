@@ -1,0 +1,156 @@
+-- Contexto
+-- Concluído o projeto e montado o projeto de banco de dados, imagine melhorias no banco e planeje rotinas de manutenção e administração para a base criada na etapa anterior
+
+-- 1 - Ajuste questões de segurança, incluindo usuários, papéis e permissões.
+-- 2 - Crie visões no banco de dados para consultas mais frequentes.
+-- 3 - Crie ao menos uma stored function, um stored procedure ou um trigger para o banco de dados, selecionando uma funcionalidade que seja adequada para tanto.
+-- 4 - Crie ao menos um índice composto para uma das tabelas.
+-- 5 - Descreva textualmente uma rotina de administração de banco de dados, prevendo backups, restore e checagem de integridade periódica.
+
+-- use projeto_integrador;
+
+/***
+1 - Ajuste questões de segurança, incluindo usuários, papéis e permissões.
+***/
+
+/*CREATE USER 'usuario_administrativo@localhost' IDENTIFIED BY '12';
+
+CREATE ROLE 'acesso_administrativo';
+
+GRANT SELECT ON administrativo.* TO 'acesso_administrativo';
+
+GRANT 'acesso_administrativo' TO 'usuario_administrativo@localhost';
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON administrativo TO 'usuario_administrativo@localhost';
+
+SHOW GRANTS FOR 'usuario_administrativo@localhost';*/
+
+
+/*CREATE USER 'usuario_financeiro@localhost' IDENTIFIED BY '34';
+
+CREATE ROLE 'acesso@financeiro';
+
+GRANT SELECT ON financeiro.* TO 'acesso@financeiro';
+
+GRANT 'acesso@financeiro' TO 'usuario_financeiro@localhost';
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON financeiro TO 'usuario_financeiro@localhost';
+
+SHOW GRANTS FOR 'usuario_financeiro@localhost';*/
+
+
+/*CREATE USER 'usuario_orçamento@localhost' IDENTIFIED BY '45';
+
+CREATE ROLE 'acesso_orçamento';
+
+GRANT SELECT ON orçamentos.* TO 'acesso_orçamento';
+
+GRANT 'acesso_orçamento' TO 'usuario_orçamento@localhost';
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON orçamentos TO 'usuario_orçamento@localhost';
+
+SHOW GRANTS FOR 'usuario_orçamento@localhost';*/
+
+
+/*CREATE USER 'usuario_rh@localhost' IDENTIFIED BY '56';
+
+CREATE ROLE 'acesso_rh';
+
+GRANT SELECT ON recursos_humano.* TO 'acesso_rh';
+
+GRANT 'acesso_rh' TO 'usuario_rh@localhost';
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON recursos_humanos TO 'usuario_rh@localhost';
+
+SHOW GRANTS FOR 'usuario_rh@localhost';*/
+
+
+/***
+2 - Crie visões no banco de dados para consultas mais frequentes.
+***/
+
+-- CREATE VIEW view_administrativo AS SELECT * FROM administrativo;
+
+-- CREATE VIEW view_condominio AS SELECT * FROM condominio;
+
+-- CREATE VIEW view_financeiro AS SELECT * FROM moradores;
+
+-- CREATE VIEW view_moradores AS SELECT * FROM orçamentos;
+
+-- CREATE VIEW view_recursos_humanos AS SELECT * FROM recursos_humanos;
+
+
+/***
+3 - Crie ao menos uma stored function, um stored procedure ou um trigger para o banco de dados, selecionando uma funcionalidade que seja adequada para tanto.
+***/
+
+/*delimiter $$
+CREATE PROCEDURE StatusCondominios ()
+BEGIN
+
+SELECT c.id_condominio, c.nome_condominio, c.endereço, c.número, c.sindico, c.quantidade_apartamentos, c.data_ultima_assembleia, c.data_proxima_assembleia,
+c.contas_a_pagar, c.contas_a_receber, c.multas_condominio, c.id_recursos_humanos, r.descrição_contrato,c.id_orçamento, o.tipo_de_serviço, c.id_administrativo
+FROM condominio c
+JOIN recursos_humanos r
+ON c.id_recursos_humanos = r.id_recursos_humanos
+JOIN orçamentos o
+ON c.id_orçamento = o.id_orçamento
+ORDER BY id_condominio;
+
+END;
+$$
+
+CALL StatusCondominios();*/
+
+
+/***
+4 - Crie ao menos um índice composto para uma das tabelas.
+***/
+
+/*SHOW INDEX FROM administrativo;
+
+CREATE INDEX idx_idAdministrativo ON administrativo(id_administrativo);
+
+EXPLAIN SELECT * FROM administrativo WHERE id_administrativo = 2;*/
+
+
+/*SHOW INDEX FROM condominio;
+
+CREATE INDEX idx_idCondominio ON condominio(id_condominio);
+
+EXPLAIN SELECT * FROM condominio WHERE id_condominio = 1;*/
+
+
+/*SHOW INDEX FROM financeiro;
+
+CREATE INDEX idx_idFinanceiro ON financeiro(id_financeiro);
+
+EXPLAIN SELECT * FROM financeiro WHERE id_financeiro = 3;*/
+
+
+/*SHOW INDEX FROM moradores;
+
+CREATE INDEX idx_idMorador ON moradores(id_morador);
+
+EXPLAIN SELECT * FROM moradores WHERE id_morador = 10;*/
+
+
+/*SHOW INDEX FROM orçamentos;
+
+CREATE INDEX idx_idOrçamento ON orçamentos(id_orçamento);
+
+EXPLAIN SELECT * FROM orçamentos WHERE id_orçamento = 3;*/
+
+
+/*SHOW INDEX FROM recursos_humanos;
+
+CREATE INDEX idx_IdRecursosHumanos ON recursos_humanos(id_recursos_humanos);
+
+EXPLAIN SELECT * FROM recursos_humanos WHERE id_recursos_humanos = 4;*/
+
+
+/***
+5 - Descreva textualmente uma rotina de administração de banco de dados, prevendo backups, restore e checagem de integridade periódica.
+***/
+
+-- Arquivo anexado em documento World
